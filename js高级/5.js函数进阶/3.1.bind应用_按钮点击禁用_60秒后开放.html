@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>按钮点击禁用，60秒后开放</title>
+</head>
+
+<body>
+  <button>点击</button>
+  <script>
+    let btn = document.querySelector('button');
+
+    // 第一种
+    // btn.addEventListener('click', function () {
+    //   this.disabled = true;
+    //   setTimeout(function () {
+    //     btn.disabled = false;
+    //   }, 3000);
+    // })
+
+    // 第二种
+    // btn.addEventListener('click', function () {
+    //   this.disabled = true;
+    //   let that = this
+    //   setTimeout(function () {
+    //     that.disabled = false;
+    //   }, 3000);
+    // })
+
+    // 第三种
+    // btn.addEventListener('click', function () {
+    //   this.disabled = true;
+    //   setTimeout(function () {
+    //     this.disabled = false;
+    //   }.bind(this), 3000);
+    // })
+
+    // 第四种
+    btn.addEventListener('click', function () {
+      this.disabled = true;
+      setTimeout(() => {
+        this.disabled = false;
+      }, 3000);
+    })
+
+  </script>
+</body>
+
+</html>

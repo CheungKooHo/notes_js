@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Star(uname, age) {
+      this.uname = uname;
+      this.age = age;
+    }
+    // Star.prototype.sing = function () {
+    //   console.log('我会唱歌');
+    // }
+    Star.prototype = {
+      constructor: Star,    // 利用constructor手动将原型对象指会原来的构造函数
+      sing: function () {
+        console.log('sing');
+      },
+      movie: function () {
+        console.log('movie');
+      }
+    }
+
+    let ldh = new Star('刘德华', 18);
+
+    /*
+    对象原型（__proto__）和构造函数原型对象（prototype）中都有constructor属性
+    我们成为构造函数，因为它指回构造函数本身
+    主要用于记录对象应用了那个构造函数，它可以让原型对象重新指回原来的构造函数【这一点在使用构造函数进行继承时要用到】
+    */
+    console.log(Star.prototype);
+    console.log(ldh.__proto__);
+    console.log(Star.prototype.constructor);
+    console.log(ldh.__proto__.constructor);
+
+
+  </script>
+</body>
+
+</html>

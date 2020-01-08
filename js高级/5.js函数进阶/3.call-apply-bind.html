@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // call/apply/bind用于改变函数内部的this指向
+
+    function fn(num) {
+      console.log(num);
+      console.log(this);
+      console.log('----------------------------------------------');
+    }
+
+    // 1.call()方法-->调用函数，并且改变this指向【call的主要作用是ES6之前用来实现继承】
+    var call = {
+      name: 'call'
+    }
+    fn.call(call, 1)
+
+    // 2.apply()方法-->调用函数，并且改变this指向，但传参时要用[]
+    //    【apply经常用于跟数组有关的操作，比如借助数学对象实现数组最大值和最小值】
+    var apply = {
+      name: 'apply'
+    }
+    fn.apply(apply, [2])
+
+    // 3.bind()方法-->不调用函数，返回原函数的拷贝【如果想调用需要手动加()】，并且改变this指向
+    //    【bind方法使用：要改变this指向，又不立即调用的时候-----例如：按钮点击禁用，60秒后开放】
+    var bind = {
+      name: 'bind'
+    }
+    fn.bind(bind, 3)()
+  </script>
+</body>
+
+</html>

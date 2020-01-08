@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function Star(uname, age) {
+    //   this.uname = uname;
+    //   this.age = age;
+    //   this.sing = function () {
+    //     console.log('我会唱歌');
+    //   }
+    // }
+    // 【这种定义方式在调用sing方法时，会存在浪费内存的问题】
+
+    // 所以一般把构造函数中的方法写在 其 原型对象上--->prototype
+    function Star(uname, age) {
+      this.uname = uname;
+      this.age = age;
+    }
+    Star.prototype.sing = function () {
+      console.log('我会唱歌');
+    }
+
+    let ldh = new Star('刘德华', 18);
+
+    // 每一个实例化的对象内部都有一个  对象原型--->__proto__
+    // 对象原型  __proto__ 指向构造函数中的  原型对象 Star.prototype
+    console.log(ldh.__proto__ === Star.prototype);
+
+    // 实例化对象中，方法的查找规则：1.先看自己-->2.查找对象原型指向的 构造函数中的原型对象--->3.继续向父级查询
+    ldh.sing()
+
+    /*
+    原型链
+      对象原型  __proto__ 指向构造函数中的  原型对象 Star.prototype
+      构造函数里的原型对象内部 的 __proto__ 指向的是 Object.prototype
+      Object里的原型对象内部 的 __proto__ 指向的是 null
+    */
+
+    /*
+    对象成员的查找机制：
+      通过原型链从下到上逐级查找，就近原则
+    */
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  Class 的本质还是 Function<br>
+  类的本质其实还是一个函数，我们也可以简单的认为 类就是构造函数的另外一种写法
+  <h3>构造函数的特点</h3>
+  <p>1.有原型对象prototype</p>
+  <p>2.原型对象里有constructor指向构造函数本身</p>
+  <p>3.可以通过原型对象添加方法</p>
+  <p>4.创建的实例对象有__proto__原型指向构造函数的原型对象</p>
+  <b><i>相对应的，类中也有以上特点</i></b>
+  <script>
+    class Star {
+
+    }
+    console.log(typeof Star);//function
+    console.log(Star.prototype);
+    console.log(Star.prototype.constructor);
+
+  </script>
+</body>
+
+</html>

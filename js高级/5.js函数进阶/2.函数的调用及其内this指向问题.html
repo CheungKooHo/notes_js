@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>bind</button>
+  <script>
+    // 1.普通函数-->Window
+    function fn() {
+      console.log('普通函数:' + this);
+    }
+    fn(); fn.call();
+
+    // 2.对象的方法-->Object【指向方法所属对象o】
+    var o = {
+      sayHi: function () {
+        console.log('对象的方法:' + this);
+      }
+    }
+    o.sayHi();
+
+    // 3.构造函数及其原型方法-->Object【指向实例对象ldh】
+    function Star() {
+      console.log('构造函数:' + this);
+    };
+    Star.prototype.sing = function () {
+      console.log('构造函数原型:' + this);
+
+    }
+    var ldh = new Star();
+    ldh.sing();
+
+    // 4.绑定事件函数-->HTMLButtonElement【指向函数调用者-绑定事件对象-btn按钮对象】
+    let btn = document.querySelector('button')
+    btn.onclick = function () {
+      console.log('绑定事件函数:' + this);
+    }
+    // 点击按钮调用
+
+    // 5. 定时器函数-->Window
+    setTimeout(function () {
+      console.log('定时器函数:' + this);
+    }, 3000);
+    // 定时器自动调用
+
+    // 6.立即执行函数-->Window
+    (function () {
+      console.log('立即执行函数:' + this);
+    })();
+    // 声明完自动调用
+  </script>
+</body>
+
+</html>

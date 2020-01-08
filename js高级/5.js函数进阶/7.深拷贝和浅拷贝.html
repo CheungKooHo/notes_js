@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 浅拷贝只拷贝一层,更深层的对象级别只拷贝引用
+    // 深拷贝拷贝多层，每一级别的数据都会拷贝
+    let obj = {
+      id: 1,
+      name: 'andy',
+      msg: {
+        age: 18
+      },
+      hobby: ['game', 'sing']
+    };
+    var o = {};
+
+    // 浅拷贝
+    for (const k in obj) {
+      o[k] = obj[k];
+    }
+    // 【注】这里拷贝的引用类型是将o的地址指向了obj的堆内存中储存的msg
+    // 【注】此时修改o的数据后会影响obj的数据
+    // 浅拷贝的语法糖【ES6新增方法】
+    Object.assign(o, obj);
+    o.msg.age = 22;
+    o.hobby[0] = 'eat'
+    console.log(o);
+    console.log(obj);
+
+
+    // 深拷贝
+    var o2 = {}
+    // 封装深拷贝函数
+    function deepCopy(newObj, oldObj) {
+      for (const k in oldObj) {
+        if (oldObj[k] instanceof Array) {
+          newObj[k] = []
+          deepCopy(newObj[k], oldObj[k])
+        } else if (oldObj[k] instanceof Object) {
+          newObj[k] = {}
+          deepCopy(newObj[k], oldObj[k])
+        } else {
+          newObj[k] = oldObj[k]
+        }
+      }
+    }
+    deepCopy(o2, obj)
+    o2.msg.age = 20;
+    o2.hobby[0] = 'sleep'
+    console.log(o2);
+    console.log(obj);
+
+
+
+  </script>
+
+</body>
+
+</html>

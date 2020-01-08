@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul>
+    <li>111</li>
+    <li>222</li>
+    <li>333</li>
+  </ul>
+
+  <script>
+    // 变量作用域详解：
+    // 变量根据作用域不同分为两种：全局变量和局部变量
+    // 			1.函数内部可以使用全局变量
+    // 			2.函数外部不可以使用局部变量
+    // 			3.当函数执行完毕，本作用域内的局部变量会销毁
+
+    // 闭包概念：指有权访问另一个函数作用域中的变量的函数----------JavaScript高级程序设计
+
+    let lis = document.querySelectorAll('li')
+
+    // 点击输出索引
+    for (let i = 0; i < lis.length; i++) {
+      (function (i) {
+        lis[i].addEventListener('click', function () {
+          console.log(i);
+        })
+      })(i)
+    }
+
+    // 三秒后输出li内容
+    for (let i = 0; i < lis.length; i++) {
+      (function (i) {
+        setTimeout(function () {
+          console.log(lis[i].innerHTML);
+        }, 3000)
+      })(i)
+    }
+  </script>
+</body>
+
+</html>
