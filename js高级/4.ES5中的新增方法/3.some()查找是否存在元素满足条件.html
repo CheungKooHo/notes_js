@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>some</title>
+</head>
+
+<body>
+  <script>
+    // some()查找数组中是否有满足条件的元素，有一个就返回true，没有返回false
+    let arr = [4, 5, 78, 2, 98, 2, 4, 3]
+    let flag = arr.some(function (item, index, array) {
+      return item > 90
+    })
+    console.log(flag);
+
+    // every()用法与some()相似，检查数组中的元素是否都满足条件，都满足返回true，一个不满足返回false
+
+  </script>
+</body>
+
+</html>

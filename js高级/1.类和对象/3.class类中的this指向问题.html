@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>点击</button>
+  <script>
+    let that, _that;
+    class Star {
+      constructor(name) {
+        this.name = name
+        that = this
+        this.btn = document.querySelector('button')
+        this.btn.onclick = this.movie
+      }
+      sing() {
+        _that = this
+      }
+      movie() {
+        console.log(this);
+      }
+    }
+    let ldh = new Star()
+    ldh.sing()
+    console.log(that === ldh);
+    console.log(_that === ldh);
+
+    // class中，constructor里的this指向实例对象，方法里的this指向方法调用者
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Name {
+      // class body
+    }
+    var xx = new Name();
+    // 类必须使用new来实例化对象
+
+    class Star {
+      constructor(uname) {
+        this.uname = uname;
+      }
+      sing() {
+        console.log('冰雨');
+      }
+    }
+    Star.prototype.kill = function () {
+      console.log('sing');
+    }
+    let ldh = new Star('刘德华')
+    console.log(ldh.uname);
+    ldh.sing()
+    ldh.kill()
+
+  </script>
+</body>
+
+</html>
