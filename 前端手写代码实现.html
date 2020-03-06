@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <section>
+    1.call 的实现
+    <br>
+    call 用于改变函数this指向，并执行函数，一般情况下，谁调用函数，函数的this就指向谁，利用这一特点，减函数作为对象的属性，由对象进行调用，即可改变函数this指向，这种被称为隐式绑定。
+    <br>
+    apply实现同理，只需要改变入参形式。
+
+    <!-- <script>
+      let obj = {
+        name: 'jojo'
+      }
+      function foo() {
+        console.log(this)
+      }
+      foo();
+  
+      // 实现call
+      Function.prototype.mycall = function () {
+        if (typeof this !== 'function') {
+          throw 'caller must be a function'
+        }
+        let othis = arguments[0] || window;
+        othis._fn = this;
+        let arg = [...arguments].slice(1);
+        let res = othis._fn(...arg);
+        Reflect.deleteProperty(othis, '_fn');
+        return res;
+      }
+  
+      foo.mycall(obj);
+      foo.call(obj);
+    </script> -->
+  </section>
+  <hr>
+  <section>
+    2.bind 的实现
+    <br>
+    bind用于改变函数this 指向，并返回一个函数
+    <!-- <script>
+      Function.prototype.mybind = function (oThis) {
+        if (typeof this !== 'function') {
+          throw 'caller must be a function'
+        }
+        let fThis = this;
+        // Array.prototype.slice.call 将类数组转化为数组
+        let arg = Array.prototype.slice.call(arguments, 1);
+        let NOP = function () { }
+        let fBound = function () {
+          let arg_ = Array.prototype.slice.call(arguments);
+          return fThis.apply(this instanceof fBound ? this : oThis, arg.concat(arg_))
+        }
+        // 维护原型
+        if (this.prototype) {
+          NOP.prototype = this.prototype;
+          fBound.prototype = new NOP()
+        }
+        return fBound
+      }
+
+      // 使用
+      let obj = {
+        msg: 'jojo'
+      }
+      function foo(msg) {
+        console.log(msg + '' + this.msg)
+      }
+      let f = foo.mybind(obj);
+      f('hello')
+    </script> -->
+  </section>
+  <hr>
+  <section>
+    3.new 的实现
+    <br>
+    new 使用构造函数创建实例对象，为实例对象添加this属性和方法
+    <br>
+    new 的过程：
+    <ul>
+      <li>创建新对象</li>
+      <li>新对象__proto__指向构造函数原型</li>
+      <li>新对象添加属性方法（this指向）</li>
+      <li>返回this指向的习惯对象</li>
+    </ul>
+    <!-- <script>
+      function new_() {
+        let fn = Array.prototype.shift.call(arguments);
+        if (typeof fn !== 'function') {
+          throw fn + 'is not a constructor'
+        }
+        let obj = {}
+        obj.__proto__ = fn.prototype;
+        let res = fn.apply(obj, arguments);
+        return typeof res === 'object' ? res : obj
+      }
+    </script> -->
+  </section>
+  <hr>
+  <section>
+    4.instanceof 的实现
+    <br>
+    instanceof判断左边的圆形是不是存在于右边的原型链中
+    <br>
+    实现思路：逐层往上查找原型，如果最终的原型为null 时，证明不存在原型链中，否则 存在。
+    <!-- <script>
+      function instanceof_(left, right) {
+        left = left.__proto__;
+        while (left !== right.prototype) {
+          left = left.__proto__;
+          if (left === null) {
+            return false
+          }
+        }
+        return true
+      }
+    </script> -->
+  </section>
+  <hr>
+  <section>
+    5.Object.create 的实现
+    <br>
+    object.create创建一个新对象，使用现有的对象来提供新创建的对象的__proto__，第二个可选参数为属性描述对象
+    <!-- <script>
+      function objectCreate_(proto, propertiesObject = {}) {
+        if (typeof proto !== 'object' || typeof proto !== 'functioin' || typeof proto !== null) {
+          throw ('Object prototype may only be an Object or null:' + proto)
+        }
+        let res = {}
+        res.__proto__ = proto;
+        Object.defineProperties(res, propertiesObject);
+        return res
+      }
+    </script> -->
+  </section>
+  <hr>
+  <section>
+    6.深拷贝 的实现
+    <br>
+    深拷贝为对象创建一个相同的副本，两者的引用地址不同。当你希望使用一个对象，但又不想修改原对象的时候深拷贝是一个很好的选择。（本实现方法只对对象和数组做深拷贝）
+    <br>
+    实现思路：遍历对象，应用类型使用递归继续拷贝，基本类型直接赋值
+    <!-- <script>
+      function deepClone(origin) {
+        let toStr = Object.prototype.toString;
+        let isInvalid = toStr.call(origin) !== '[object Object]' && tostr.call(origin) !== '[object Array]';
+        if (isInvalid) {
+          return origin
+        }
+        let target = toStr.call(origin) === '[object Object]' ? {} : [];
+        for (const key in origin) {
+          if (origin.hasOwnProperty(key)) {
+            const item = origin[key];
+            if (typeof item === 'object' && item !== null) {
+              target[key] = deepClone(item)
+            }
+            else {
+              target[key] = item
+            }
+          }
+        }
+        return target
+      }
+    </script> -->
+  </section>
+  <hr>
+  <section>
+    7.发布订阅模式
+    <br>
+    发布订阅模式在实际开发中可以实现模块间的完全解析，模块只需要关注事件的注册和触发
+    <!-- <script>
+      class EventBus {
+        constructor() {
+          this.task = {}
+        }
+
+        on(name, cb) {
+          if (!this.task[name]) {
+            this.task[name] = []
+          }
+          typeof cb === 'function' && this.task[name].push(cb)
+        }
+
+        emit(name, ...arg) {
+          let taskQueue = this.task[name];
+          if (taskQueue && taskQueue.length > 0) {
+            taskQueue.forEach(cb => {
+              cb(...arg)
+            })
+          }
+        }
+
+        off(name, cb) {
+          let taskQueue = this.task[name];
+          if (taskQueue && taskQueue.length > 0) {
+            if (typeof cb === 'function') {
+              let indecx = taskQueue.indexOf(cb);
+              index !== -1 && taskQueue.splice(index, 1)
+            }
+            if (typeof cb === 'undefined') {
+              this.task[name].length = 0
+            }
+          }
+        }
+
+        once(name, cb) {
+          let callback = (...arg) => {
+            this.off(name, callback);
+            cb(...arg)
+          }
+          typeof cb === 'function' && this.on(name, callback)
+        }
+      }
+
+      // 使用
+      let bus = new EventBus();
+      bus.on('add', function (a, b) {
+        console.log(a + b)
+      })
+      bus.emit('add', 10, 20)
+    </script> -->
+  </section>
+
+</body>
+
+</html>
